@@ -2,12 +2,16 @@ console.log(localStorage);
 
 $(document).ready(function (evt) {
   Game.start().autosave();
+  
+  View.displayIncrementerValue(Game.objects.glyph, '#glyph');
 
-  function displayIncrementerValue() {
-    setInterval(function () {
-      $('#glyph').text(Game.state.glyph.value);
-    }, Game.state.glyph.delay);
-  }
+  $('#glyph').on('change', function () {
+  //   // console.log($(this).text());
+    if ($(this).text() >= 7000) {
+      $('#add').show();
+      $('#glyph').off('change');
+    }
+  });
 
-  displayIncrementerValue();
+  // $('#glyph').trigger('change');
 });
