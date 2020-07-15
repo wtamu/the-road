@@ -1,21 +1,30 @@
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
+  background-color: black;
+  color: lime;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+pre {
+  margin: 0 0;
 }
 
 main {
-  font-size: .9rem;
+  font-size: 0.9rem;
+}
+
+.bold {
+  font-weight: 900;
 }
 
 .header {
-  margin: auto;
-  text-align: center;
-  margin-bottom: 30px;
-  width: 33%;
-}
-
-.no-decoration {
-  text-decoration: none;
-  color: unset;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0px 50px;
 }
 
 .flex-vertical {
@@ -27,6 +36,12 @@ main {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 10px;
+}
+
+.status-bar {
+  border: 1px solid lime;
+  padding: 0px 45px;
+  min-width: 150px;
 }
