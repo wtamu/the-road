@@ -3,7 +3,7 @@
  */
 
  const Schema = {
-  'stone': Incrementer
+  'gp': Incrementer
  }
 
 

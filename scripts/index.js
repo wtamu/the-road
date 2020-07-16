@@ -11,7 +11,7 @@ const Game = {
   },
 
   update: function () { 
-    Object.values(this.objects).forEach(cls => cls.update());
+    // Object.values(this.objects).forEach(cls => cls.update());
   },
 
   render: function () {
@@ -28,13 +28,8 @@ const Game = {
     return this;
   },
 
-  restart: function () {
-    this._startNewGame();
-    return this;
-  },
-
   autosave: function () {
-    this.model.autosave(this.objects, 3000);
+    this.model.autosave(this.objects, 1000);
     return this;
   }
 }

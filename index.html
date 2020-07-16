@@ -21,30 +21,30 @@
 
 <body>
   <header class='header'>
-    <pre class="bold">
-   _____`_         _____                 _,  
- `|_   _| \       `| ___`\  ,           / |  
-  , | | | /__`  ___| |_/ /___  .__ _` __\ |` 
-    | | | '_ \ / _ \    // _ \`/ _` |/ _` |  
-    | | | | | |  __/ |\ \ {_} | (_| | (_| |  
-    \_/ |_| |_/\___\_| \_\___/ \__,_|\__,_|  
-      </pre>
+    <span class='header-title'>THE ROAD</span>
   </header>
   <main>
-    <div class="grid">
-      <div class="flex-vertical">
-        <div class="status-bar">
-          <p>Stone: <span id="glyph"><(^_^)></span></p>
+    <div class="flex-vertical">
+      <!-- status bar -->
+      <div class="status-bar">
+        <div class="status-bar__character">
+          <p>HP:<span id="status-bar-hp">10</span></p>
+          <p>ATK:<span id="status-bar-atk">1</span></p>
+          <p>DEF:<span id="status-bar-def">0</span></p>
+        </div>
+        <div class="status-bar__resources">
+          <p><span id="status-bar-gold">100</span>gp</p>
         </div>
       </div>
-      <div class="flex-vertical">
-        <p>Placeholder</p>
-        <button id="add" hidden>Add: 100</button>
-        <button id="subtract" hidden>Subtract: 100</button>
-        <button id="incrementBy" hidden>Increase Rate: 10</button>
+      <div class="xp-bar">
+        <span id="xp-bar"></span>
       </div>
-      <div class="flex-vertical">
-        <p>Placeholder</p>
+      <!-- zone -->
+      <div class="zone">
+        <h1 class="zone-title">The Forest</h1>
+        <button class="zone-monster">Goblin HP:5</button>
+        <button class="zone-monster opacity-4">Goblin HP:5</button>
+        <button class="zone-monster opacity-2">Goblin HP:5</button>
       </div>
     </div>
   </main>
