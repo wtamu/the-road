@@ -1,7 +1,11 @@
-// Variables
-$font-stack: "Courier New", Courier, monospace;
+// Colors
 $primary-color: black;
 $bg-color: white;
+
+// Fonts
+$font-stack: "Courier New", Courier, monospace;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
 
 // Base Elements
 body {
@@ -18,7 +22,7 @@ a {
 button {
   font-family: inherit;
   font-size: inherit;
-  font-weight: 600;
+  font-weight: $font-weight-bold;
   border: 1px solid $primary-color;
   background-color: $bg-color;
 }
@@ -28,16 +32,16 @@ pre {
 }
 
 main {
-  font-size: 0.9rem;
+  font-size: 1.5rem;
 }
 
 h1 {
   font-size: 1.75em;
-  font-weight: 100;
+  font-weight: $font-weight-normal;
 }
 
 .bold {
-  font-weight: 900;
+  font-weight: $font-weight-bold;
 }
 
 .header {

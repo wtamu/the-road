@@ -11,7 +11,9 @@ const Model = {
   schema: Schema,
 
   read: function () {
-    return JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+    // const serialized = localStorage.getItem(LOCAL_STORAGE_KEY);
+    // return serialized ? JSON.parse(serialized) : [];
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
   },
 
   write: function (data) {

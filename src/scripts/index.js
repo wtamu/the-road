@@ -6,7 +6,7 @@ const Game = {
 
   init: function () {
     this.start = NOOP;
-    if ( !localStorage.getItem(LOCAL_STORAGE_KEY) ) this.objects = { 'stone': new Incrementer() }
+    if ( !localStorage.getItem(LOCAL_STORAGE_KEY) ) this.objects = { 'gp': new Incrementer() }
     return this;
   },
 
@@ -16,7 +16,7 @@ const Game = {
 
   render: function () {
     // move this type of render to View class?
-    $('#glyph').text(this.objects.stone.value).change();
+    $('#glyph').text(this.objects.gp.value).change();
     // Object.values(this.objects).forEach(cls => cls.render());
   },
 
@@ -35,7 +35,7 @@ const Game = {
 }
 
 
-$(document).ready(function (evt) {
+$(function() {
   console.log(localStorage);
   Game.init().loop().autosave();
 });
