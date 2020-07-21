@@ -1,22 +1,17 @@
 const Game = {
 
-  model: Model,
+  env: window.env,
 
-  objects: Model.initializeObjects(),
+  objects: Model.init(),
 
-  init: function () {
-    this.start = NOOP;
-    if ( !localStorage.getItem(LOCAL_STORAGE_KEY) ) this.objects = { 'gp': new Incrementer() }
-    return this;
-  },
-
-  update: function () { 
+  update: function () {
+    // this.objects.char.update(monster);
     // Object.values(this.objects).forEach(cls => cls.update());
   },
 
   render: function () {
     // move this type of render to View class?
-    $('#glyph').text(this.objects.gp.value).change();
+    // $('#glyph').text(this.objects.gp.value).change();
     // Object.values(this.objects).forEach(cls => cls.render());
   },
 
@@ -29,15 +24,15 @@ const Game = {
   },
 
   autosave: function () {
-    this.model.autosave(this.objects, 1000);
+    Model.autosave(this.objects, 1000);
     return this;
   }
 }
 
 
-$(function() {
+$(function () {
   console.log(localStorage);
-  Game.init().loop().autosave();
+  Game.loop().autosave();
 });
 
   // $('#glyph').on('change', function () {

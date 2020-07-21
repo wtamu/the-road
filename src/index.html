@@ -18,30 +18,30 @@
 
 <body>
   <header class='header'>
-    <span class='header-title'>THE ROAD</span>
+    <span class='header__title'>THE ROAD</span>
+    <div class="header__status-bar">
+      <div class="header__status-bar-character">
+        <p>HP:<span id="status-bar-hp">10</span></p>
+        <p>ATK:<span id="status-bar-atk">1</span></p>
+        <p>DEF:<span id="status-bar-def">0</span></p>
+      </div>
+      <div class="header__status-bar-resources">
+        <p><span id="status-bar-gold">100</span>gp</p>
+      </div>
+    </div>
+    <div class="header__xp-bar">
+      <span id="status-bar-xp"></span>
+    </div>
   </header>
-  <main>
-    <div class="flex-vertical">
-      <!-- status bar -->
-      <div class="status-bar">
-        <div class="status-bar__character">
-          <p>HP:<span id="status-bar-hp">10</span></p>
-          <p>ATK:<span id="status-bar-atk">1</span></p>
-          <p>DEF:<span id="status-bar-def">0</span></p>
-        </div>
-        <div class="status-bar__resources">
-          <p><span id="status-bar-gold">100</span>gp</p>
-        </div>
-      </div>
-      <div class="xp-bar">
-        <span id="xp-bar"></span>
-      </div>
-      <!-- zone -->
-      <div class="zone">
-        <h1 class="zone-title">The Forest</h1>
-        <button class="zone-monster">Goblin HP:5</button>
-        <button class="zone-monster opacity-4">Goblin HP:5</button>
-        <button class="zone-monster opacity-2">Goblin HP:5</button>
+  <main class="column">
+    <div class="zone">
+      <h1 class="zone__title">The Forest</h1>
+      <p class="zone__description">The road winds through a dark forest. You catch movement out of the corner of your
+        eye.</p>
+      <div class="zone__queue" id="zone-queue">
+        <button class="zone__queue-item">Goblin HP:5</button>
+        <button class="zone__queue-item opacity-4">Goblin HP:5</button>
+        <button class="zone__queue-item opacity-2">Goblin HP:5</button>
       </div>
     </div>
   </main>

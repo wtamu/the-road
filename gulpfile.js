@@ -5,7 +5,6 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   minifyCSS = require('gulp-minify-css'),
   concat = require('gulp-concat'),
-  gulp = require('gulp'),
   babel = require('gulp-babel'),
   browserSync = require('browser-sync');
 
@@ -21,7 +20,9 @@ gulp.task('scss', function () {
     // Minification of CSS liquid files.
     .pipe(minifyCSS())
     // save the file to the dist directory
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest('./dist/'))
+    // sync changes automatically to the browser (for watch)
+    .pipe(browserSync.stream({ match: '**/*.css' }));
 });
 
 
@@ -29,6 +30,7 @@ gulp.task('js', function () {
   // Will look for all js in the scripts directory
   return gulp.src([
     './src/scripts/utils.js',
+    './src/scripts/static.js',
     './src/scripts/classes.js',
     './src/scripts/model.js',
     './src/scripts/**/*.js'
@@ -42,21 +44,25 @@ gulp.task('js', function () {
     // You can rename the js to fit your needs. 
     .pipe(concat('scripts.js'))
     // Save the file to the dist directory
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest('./dist/'))
+    // sync changes automatically to the browser (for watch)
+    .pipe(browserSync.stream({ match: '**/*.js' }));
 });
 
 gulp.task('html', function () {
   // Will look for all js in the scripts directory
   return gulp.src('./src/**/*.html')
     // Save the file to the dist directory
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest('./dist/'))
+    // sync changes automatically to the browser (for watch)
+    .pipe(browserSync.stream({ match: '**/*.html' }));
 });
 
 // Watches for changes in scss and js files
 gulp.task('default', function () {
-  gulp.watch('./src/styles/**/*.scss', gulp.series('scss')).pipe(browserSync.stream({ match: '**/*.css' }));
-  gulp.watch('./src/scripts/**/*.js', gulp.series('js')).pipe(browserSync.stream({ match: '**/*.js' }));
-  gulp.watch('./src/**/*.html', gulp.series('html')).pipe(browserSync.stream({ match: '**/*.html' }));
+  gulp.watch('./src/styles/**/*.scss', gulp.series('scss'));
+  gulp.watch('./src/scripts/**/*.js', gulp.series('js'));
+  gulp.watch('./src/**/*.html', gulp.series('html'));
 });
 
 
