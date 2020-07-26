@@ -11,20 +11,23 @@ class Monster {
 
   isDead() { return this.hp <= 0 }
 
+  isAlive() { return !this.isDead() }
+
   attack(monster) {
-    console.log(`${this.name} attacking ${monster.name}!`);
-    if (monster.isAlive) monster.takeDamage(this.atk);
+    // console.log(`${this.name} attacking ${monster.name}!`);
+    if (monster.isAlive()) monster.takeDamage(this.atk);
   }
 
   takeDamage(damage) {
     this.hp -= damage - (this.def > damage ? damage : this.def)
-    console.log(`${this.name} has ${this.hp} HP!`);
+    // console.log(`${this.name} has ${this.hp} HP!`);
   }
 }
 
 class Character extends Monster {
   constructor(opts = { name: 'Human', maxHp: 20, hp: 20, atk: 1, def: 0, gp: 0, xp: 0, lvl: 1 }) {
     super(opts);
+    this.maxHp = opts.maxHp
     this.lvl = opts.lvl;
   }
 
@@ -35,30 +38,66 @@ class Character extends Monster {
   }
 
   update(monster) {
-    if (!monster) return false;
+    if (!monster) return;
 
     // Exchange attacks
     this.attack(monster);
     monster.attack(this);
 
-    // Character dead...
-    if (this.isDead()) {
-      console.log(`${this.name} is dead!`);
-      this.hp = this.maxHp; // Recovery screen. For now reset to full hp
-      return;
+    // Monster dead...
+    if (monster.isDead()) {
+      // console.log(`${monster.name} is dead!`);
+      this.loot(monster);
     }
 
-    // Character alive and Monster dead...
-    if (monster.isDead()) {
-      console.log(`${monster.name} is dead!`);
-      this.loot(monster);
-      monster.hp = monster.maxHp; // load next monster. For now reset to full hp
-      return;
+    // Character dead...
+    if (this.isDead()) {
+      // console.log(`${this.name} is dead!`);
+      this.hp = this.maxHp; // Recovery screen. For now reset to full hp
     }
 
     // Character alive and Monster alive. Do nothing...
-    console.log(`${this.name} and ${monster.name} are not dead!`);
   }
+}
+
+class Zone {
+  constructor(opts = window.env.zones[0]) {
+    this.id = opts.id;
+    this.name = opts.name;
+    this.monsters = opts.monsters.map(m => new Monster(m));
+  }
+
+  getMonster() {
+    // All monsters are dead
+    if (this.monsters[0].isDead() && this.monsters.length == 1) {
+      console.log('Defeated all monsters!');
+      return this.monsters.shift();
+    }
+
+    // Monster is dead, get next monster
+    if (this.monsters[0].isDead()) {
+      this.monsters.shift();
+      return this.monsters[0];
+    }
+
+    return this.monsters[0];
+  }
+
+  nextZone() {
+    const nextZone = window.env.zones[this.id + 1];
+    if (nextZone) {
+      return new Zone(nextZone);
+    }
+  }
+
+  getZoneByName(zoneName) {
+    const zone = window.env.zones.find(zone => zone.name === zoneName);
+    if (zone) {
+      return new Zone(zone);
+    }
+  }
+
+  isDefeated() { return this.monsters.length == 1 && this.monsters[0].isDead() }
 }
 
 /**

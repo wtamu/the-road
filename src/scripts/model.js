@@ -1,6 +1,7 @@
 const Model = {
   schema: {
-    'char': Character
+    'char': Character,
+    'zone': Zone
   },
 
   read: function () {

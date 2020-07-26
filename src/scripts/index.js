@@ -5,8 +5,19 @@ const Game = {
   objects: Model.init(),
 
   update: function () {
-    // this.objects.char.update(monster);
-    // Object.values(this.objects).forEach(cls => cls.update());
+    // TODO: this is really messy, figure out how to manage the monster queue
+    if (this.objects.zone.isDefeated()) {
+      let zone = this.objects.zone.nextZone();
+      this.objects.zone = zone ? zone : this.objects.zone.getZoneByName('forest');
+      console.log(`updating zone... ${this.objects.zone.name}`);
+    }
+
+    let monster = this.objects.zone.getMonster();
+    let char = this.objects.char;
+
+    console.log(`Monsters: ${this.objects.zone.monsters}`);
+    char.update(monster);
+    console.log(`Char: ${char.hp} | Monster: ${monster.name}, ${monster.hp}`);
   },
 
   render: function () {
