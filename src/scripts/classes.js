@@ -1,103 +1,86 @@
 class Monster {
-  constructor(opts = { name: 'Monster', maxHp: 10, hp: 10, atk: 1, def: 0, gp: 1, xp: 1 }) {
-    this.name = opts.name;
-    this.maxHp = opts.maxHp;
-    this.hp = opts.hp;
-    this.atk = opts.atk;
-    this.def = opts.def;
-    this.gp = opts.gp;
-    this.xp = opts.xp;
+  constructor(opts = { name: 'Monster', hp: 10, maxHp: 10, atk: 1, def: 0, gp: 1, xp: 1 }) {
+    Object.keys(opts).forEach(key => { this[key] = opts[key] });
   }
 
   isDead() { return this.hp <= 0 }
 
   isAlive() { return !this.isDead() }
 
-  attack(monster) {
-    // console.log(`${this.name} attacking ${monster.name}!`);
-    if (monster.isAlive()) monster.takeDamage(this.atk);
-  }
+  attack(monster) { if (this.isAlive()) return monster.defend(this.atk) }
 
-  takeDamage(damage) {
-    this.hp -= damage - (this.def > damage ? damage : this.def)
-    // console.log(`${this.name} has ${this.hp} HP!`);
-  }
+  defend(damage) { return this.hp -= damage - (this.def > damage ? damage : this.def) }
 }
 
 class Character extends Monster {
-  constructor(opts = { name: 'Human', maxHp: 20, hp: 20, atk: 1, def: 0, gp: 0, xp: 0, lvl: 1 }) {
+  constructor(opts = { name: 'Human', hp: 20, maxHp: 20, atk: 1, def: 0, gp: 0, xp: 0, lvl: 1 }) {
     super(opts);
-    this.maxHp = opts.maxHp
-    this.lvl = opts.lvl;
   }
 
-  loot(monster) {
-    console.log(`Looting ${monster.name}!`);
-    this.xp += monster.xp;
-    this.gp += monster.gp;
+  loot(monster) { 
+    this.xp += monster.xp; 
+    this.gp += monster.gp; 
   }
 
-  update(monster) {
-    if (!monster) return;
-
-    // Exchange attacks
-    this.attack(monster);
-    monster.attack(this);
-
-    // Monster dead...
-    if (monster.isDead()) {
-      // console.log(`${monster.name} is dead!`);
-      this.loot(monster);
-    }
-
-    // Character dead...
-    if (this.isDead()) {
-      // console.log(`${this.name} is dead!`);
-      this.hp = this.maxHp; // Recovery screen. For now reset to full hp
-    }
-
-    // Character alive and Monster alive. Do nothing...
-  }
+  update() { /* lvl up? */ }
 }
 
 class Zone {
   constructor(opts = window.env.zones[0]) {
-    this.id = opts.id;
+    this._constructor(opts);
+  }
+
+  _constructor(opts) {
     this.name = opts.name;
+    this.index = window.env.zones.findIndex(zone => zone.name === this.name);
     this.monsters = opts.monsters.map(m => new Monster(m));
   }
 
-  getMonster() {
-    // All monsters are dead
-    if (this.monsters[0].isDead() && this.monsters.length == 1) {
-      console.log('Defeated all monsters!');
-      return this.monsters.shift();
-    }
-
-    // Monster is dead, get next monster
-    if (this.monsters[0].isDead()) {
-      this.monsters.shift();
-      return this.monsters[0];
-    }
-
-    return this.monsters[0];
-  }
+  getZone(name) { return window.env.zones.find(zone => zone.name === name) }
 
   nextZone() {
-    const nextZone = window.env.zones[this.id + 1];
-    if (nextZone) {
-      return new Zone(nextZone);
+    if (window.env.zones.length > this.index + 1) {
+      this._constructor(window.env.zones[this.index + 1]);
+      return true;
     }
+    console.log(`You've beaten the last level! ${this.name}`);
+    return false;
   }
 
-  getZoneByName(zoneName) {
-    const zone = window.env.zones.find(zone => zone.name === zoneName);
-    if (zone) {
-      return new Zone(zone);
-    }
-  }
+  getMonster() { return this.monsters.find(monster => monster.isAlive()) }
 
-  isDefeated() { return this.monsters.length == 1 && this.monsters[0].isDead() }
+  update(player) {
+
+    let monster = this.getMonster();
+    
+    // Zone complete, load next
+    if (!monster) {
+      if (this.nextZone()) {
+        console.log(`No more monsters... Loading next zone: ${this.name}`);
+        this.update(player);
+      }
+      return;
+    }
+
+    // Exchange attacks
+    player.attack(monster);
+    monster.attack(player);
+    console.log(`${this.name}: ${player.name} (${player.hp}) fights ${monster.name} (${monster.hp})!`);
+
+    // Monster dead...
+    if (monster.isDead()) {
+      console.log(`${monster.name} is dead!`)
+      player.loot(monster);
+    }
+
+    // Character dead...
+    if (player.isDead()) {
+      console.log(`Player is dead!`)
+      player.hp = player.maxHp; // Recovery screen. For now reset to full hp
+    }
+
+    // Character alive and Monster alive. Repeat...
+  }
 }
 
 /**

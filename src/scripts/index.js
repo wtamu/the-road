@@ -5,19 +5,7 @@ const Game = {
   objects: Model.init(),
 
   update: function () {
-    // TODO: this is really messy, figure out how to manage the monster queue
-    if (this.objects.zone.isDefeated()) {
-      let zone = this.objects.zone.nextZone();
-      this.objects.zone = zone ? zone : this.objects.zone.getZoneByName('forest');
-      console.log(`updating zone... ${this.objects.zone.name}`);
-    }
-
-    let monster = this.objects.zone.getMonster();
-    let char = this.objects.char;
-
-    console.log(`Monsters: ${this.objects.zone.monsters}`);
-    char.update(monster);
-    console.log(`Char: ${char.hp} | Monster: ${monster.name}, ${monster.hp}`);
+    this.objects.zone.update(this.objects.char);
   },
 
   render: function () {

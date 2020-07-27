@@ -7,13 +7,13 @@
 
   // Zones
   env.zones = [
-    { id: 0, name: 'forest', monsters: [goblin, goblin, goblin, orc, boss] },
-    { id: 1, name: 'cave', monsters: [orc, orc, goblin, orc, boss] },
-    { id: 2, name: 'mountain', monsters: [boss, boss, boss, boss, boss] },
-    { id: 3, name: 'maze', monsters: [boss, boss, boss, boss, boss] },
-    { id: 4, name: 'volcano', monsters: [boss, boss, boss, boss, boss] },
-    { id: 5, name: 'desert', monsters: [boss, boss, boss, boss, boss] },
-    { id: 6, name: 'ocean', monsters: [boss, boss, boss, boss, boss] },
+    { name: 'forest', monsters: [goblin, goblin, goblin, orc, boss] },
+    { name: 'cave', monsters: [orc, orc, goblin, orc, boss] },
+    { name: 'mountain', monsters: [boss, boss, boss, boss, boss] },
+    { name: 'labyrinth', monsters: [boss, boss, boss, boss, boss] },
+    { name: 'volcano', monsters: [boss, boss, boss, boss, boss] },
+    { name: 'desert', monsters: [boss, boss, boss, boss, boss] },
+    { name: 'ocean', monsters: [boss, boss, boss, boss, boss] },
   ]
 
 }(window.env = window.env || {}, jQuery));
